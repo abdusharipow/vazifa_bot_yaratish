@@ -15,23 +15,40 @@ bot.on("message", async function (msg) {
             }
         })
     } else if (text == "Boshlash 🔥") {
-        const xabar = await bot.sendMessage(chatId,"Iltimos kuting....");
+        const xabar = await bot.sendMessage(chatId, "Iltimos kuting....");
 
         setTimeout(function () {
-            bot.deleteMessage(chatId,xabar.message_id);
-            bot.sendMessage(chatId,"Bo'limni tanlang" , {
-                reply_markup:{
-                    inline_keyboard:[
+            bot.deleteMessage(chatId, xabar.message_id);
+            bot.sendMessage(chatId, "Bo'limni tanlang", {
+                reply_markup: {
+                    inline_keyboard: [
                         [
-                            {text: "Cars 🚗", callback_data: "cars"},
-                            {text: "Settings ⚙️", callback_data: "set"}
+                            { text: "Cars 🚗", callback_data: "cars" },
+                            { text: "Settings ⚙️", callback_data: "set" }
                         ]
                     ]
                 }
             })
-        }, 1000) 
+        }, 1000)
     }
 
 })
-bot.on
+bot.on("callback_query", function (query) {
+    const chatId = query.message.chat.id;
+    const firstName = query.message.chat.first_name;
+    const data = query.data;
+    console.log(`chatId: ${chatId} ==> data: ${data}`);
+    
+    if(data == "cars") {
+        bot.sendMessage(chatId,"Tanlang",{
+            reply_markup:{
+                inline_keyboard:[
+                    [{text:"BMW ", callback_data: "bmw"}]
+                    [{text:"Mersedes Benz ", callback_data: "mers"}]
+                    [{text:"Audi", callback_data: "audi"}]
+                ]
+            }
+        })
+    }
+})
 console.log("Bot ishga tushdi....");
